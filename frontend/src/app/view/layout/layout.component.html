@@ -1,0 +1,44 @@
+<td-layout>
+
+    <td-layout-nav>
+        <div td-toolbar-content layout="row" layout-align="start center" flex>
+            <div [fxFlex]="50">
+                <h1>Datainfo</h1>
+            </div>
+            <div [fxFlex]="50">
+                <b class="mat-display-2">Usuários</b>
+            </div>
+        </div>
+
+        <td-layout-manage-list #manageList [opened]="true" [mode]="'side'" [sidenavWidth]="'300px'">
+            <mat-nav-list td-sidenav-content [tdLayoutManageListClose]="false">
+                <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
+                    <a mat-list-item [routerLink]="[item.route]">
+                        <mat-icon matListAvatar routerLinkActive="active-list-item">
+                            {{item.icon}}
+                        </mat-icon>
+                        <h3 matLine>{{item.title}}</h3>
+                    </a>
+                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                </ng-template>
+            </mat-nav-list>
+
+            <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+                <div flex-gt-sm="100">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+
+            <td-layout-footer-inner>
+                Optional inner footer
+            </td-layout-footer-inner>
+        </td-layout-manage-list>
+
+        <td-layout-footer>
+            <div layout="row" layout-align="start center">
+                <span class="mat-caption">Copyright &copy; 2017 Teradata. All rights reserved</span>
+            </div>
+        </td-layout-footer>
+    </td-layout-nav>
+
+</td-layout>

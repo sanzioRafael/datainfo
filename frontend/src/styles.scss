@@ -1,1 +1,116 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/*
+ * Copyright (C) 2016-2018 by Teradata Corporation. All rights reserved.
+ */
+
+ @import '~@angular/material/theming';
+ @import '~@covalent/core/theming/all-theme';
+ 
+ $mat-blue: (50: #e3f2fd,
+ 100: #bbdefb,
+ 200: #90caf9,
+ 300: #64b5f6,
+ 400: #42a5f5,
+ 500: #2196f3,
+ 600: #1e88e5,
+ 700: #0e5396,
+ 800: #1565c0,
+ 900: #0d47a1,
+ A100: #82b1ff,
+ A200: #448aff,
+ A400: #2979ff,
+ A700: #2962ff,
+ contrast: (50: $dark-primary-text,
+ 100: $dark-primary-text,
+ 200: $dark-primary-text,
+ 300: $dark-primary-text,
+ 400: $dark-primary-text,
+ 500: $light-primary-text,
+ 600: $light-primary-text,
+ 700: $light-primary-text,
+ 800: $light-primary-text,
+ 900: $light-primary-text,
+ A100: $dark-primary-text,
+ A200: $light-primary-text,
+ A400: $light-primary-text,
+ A700: $light-primary-text,
+ ));
+ 
+ // Custom typography
+ $custom-typography: mat-typography-config($button: mat-typography-level(14px, 14px, 400));
+ $custom-toolbar-typography: mat-typography-config($title: mat-typography-level(20px, 32px, 400)); // Include the base styles for Angular Material core. We include this here so that you only
+ // have to load a single css file for Angular Material in your app.
+ @include mat-core($custom-typography); // Setting the toolbar to the proper spec weight
+ @include mat-toolbar-typography($custom-toolbar-typography); // Manually import since we're not using platform.css
+ // Include the core styles for Covalent
+ @include covalent-core(); // Include pre-bundled material-icons
+ $mat-font-url: '../node_modules/@covalent/core/common/styles/font/';
+ @include covalent-material-icons(); // Include covalent utility classes
+ @include covalent-utilities(); // Include flex layout classes
+ @include covalent-layout(); // Include covalent color classes
+ @include covalent-colors(); // Define the palettes for your theme using the Material Design palettes available in palette.scss
+ // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+ // hue.
+ $accent: mat-palette($mat-blue, 700, 100, 900);
+ $primary: mat-palette($mat-grey, 800, 100, 900); // The warn palette is optional (defaults to red).
+ $warn: mat-palette($mat-red, 600, 100, 900); // Create the theme object (a Sass map containing all of the palettes).
+ $theme: mat-light-theme($primary, $accent, $warn); // Include theme styles for core and each component used in your app.
+ // Alternatively, you can import and @include the theme mixins for each component
+ // that you are using.
+ @include angular-material-theme($theme);
+ @include covalent-theme($theme); // Active icon color in list nav
+ 
+ mat-nav-list,
+ mat-list {
+     [mat-list-item].active {
+         mat-icon[matListAvatar] {
+             background-color: mat-color($accent);
+             color: mat-color($accent, default-contrast);
+         }
+ 
+         mat-icon[matListIcon] {
+             color: mat-color($accent);
+         }
+     }
+ }
+ 
+ /* ------------------------------------------------------------------------------- */
+ 
+ $foreground: map-get($theme, foreground);
+ $background: map-get($theme, background); // Apply theme for this app
+ 
+ // NGX Charts
+ [ngx-charts-axis-label] text {
+     fill: mat-color($foreground, secondary-text);
+ }
+ 
+ .tick text {
+     fill: mat-color($foreground, disabled);
+ }
+ 
+ .gridline-path {
+ 
+     &.gridline-path-horizontal,
+     &.gridline-path-vertical {
+         stroke: rgba(black, 0.06);
+     }
+ }
+ 
+ .legend-title-text {
+     color: mat-color($foreground, secondary-text);
+ }
+ 
+ mat-card-title {
+     &:hover {
+         cursor: grab;
+         cursor: -moz-grab;
+         cursor: -webkit-grab;
+     }
+ 
+     &:active {
+         cursor: grabbing;
+         cursor: -moz-grabbing;
+         cursor: -webkit-grabbing;
+     }
+ }
+ 
+ @import './assets/custom';

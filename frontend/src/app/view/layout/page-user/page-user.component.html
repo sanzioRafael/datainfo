@@ -1,0 +1,41 @@
+<div fxLayout="column" fxLayoutAlign="space-around">
+    <mat-card>
+        <mat-card-title>Lista de Usuários</mat-card-title>
+
+        <mat-card-content>
+            <form [formGroup]="pesquisa">
+                <div fxLayout="row">
+                    <mat-form-field [fxFlex]="45">
+                        <input matInput formControlName="nome" placeholder="Nome">
+                    </mat-form-field>
+
+                    <span [fxFlex]="5"></span>
+
+                    <mat-form-field [fxFlex]="20">
+                        <input matInput formControlName="situacao" placeholder="Situação">
+                    </mat-form-field>
+
+                    <span [fxFlex]="5"></span>
+
+                    <mat-form-field [fxFlex]="20">
+                        <input matInput formControlName="perfil" placeholder="Perfil">
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="end">
+                    <button mat-raised-button type="submit" color="primary">
+                        Pesquisar
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <span [fxFlex]="5"></span>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions>
+
+        </mat-card-actions>
+    </mat-card>
+</div>

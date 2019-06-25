@@ -1,0 +1,75 @@
+em {
+    background-color: yellow;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+    height: 50px !important;
+
+    .mat-form-field {
+        font-size: 14px;
+    }
+}
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+html .mat-card {
+    padding: 0;
+    margin: 0px;
+}
+
+.mat-card-actions,
+.mat-card-content,
+.mat-card-subtitle,
+.mat-card-title {
+    display: block;
+    margin-bottom: 0px !important;
+    padding: 10px !important;
+}
+
+.mat-dialog-content {
+    margin: 0 0px !important;
+    padding: 10px !important;
+}
+
+mat-card-title {
+    height: 50px;
+    padding-top: 20px;
+    padding-left: 10px;
+    background: #424242;
+    color: white;
+}
+
+mat-card-content {
+    padding: 10px;
+}
+
+.td-dialog-actions {
+    position: relative;
+    top: 16px;
+    left: 0px !important;
+}
+
+.td-dialog-wrapper {
+    padding-bottom: 20px;
+}
+
+.td-dialog-title {
+    min-height: 40px;
+    padding-top: 20px;
+    padding-left: 10px;
+    background: #CCC;
+    color: #333;
+}
+
+.td-dialog-content {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+snack-bar-container.fail {
+    background: #FF6666;
+}

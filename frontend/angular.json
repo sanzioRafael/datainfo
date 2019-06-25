@@ -87,7 +87,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "../node_modules/@covalent/core/common/platform.scss"
             ],
             "scripts": []
           }
@@ -118,6 +119,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "frontend"
 }
