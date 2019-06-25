@@ -3,7 +3,7 @@
         <mat-card-title>Lista de Usuários</mat-card-title>
 
         <mat-card-content>
-            <form [formGroup]="pesquisa">
+            <form [formGroup]="pesquisa" (ngSubmit)="filtrar()">
                 <div fxLayout="row">
                     <mat-form-field [fxFlex]="45">
                         <input matInput formControlName="nome" placeholder="Nome">
@@ -36,6 +36,67 @@
 
         <mat-card-actions>
 
+            <div fxLayout="column" [fxFlex]="100">
+                <div [fxFlex]="100">
+                    <a href="" mat-button [routerLink]="['cadastrar']" color="primary">
+                        <mat-icon>add</mat-icon>
+                        Incluir
+                    </a>
+                </div>
+
+                <br />
+
+                <table *ngIf="usuarios.length > 0" mat-table #table [dataSource]="dataSource" [fxFlex]="100">
+                    <ng-container matColumnDef="email">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef>E-mail</th>
+                        <td class="text-center" mat-cell *matCellDef="let row">
+                            {{row.email}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nome">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef>Nome</th>
+                        <td class="text-center" mat-cell *matCellDef="let row">
+                            {{row.nome}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="perfil">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef>Perfil</th>
+                        <td class="text-center" mat-cell *matCellDef="let row">
+                            {{row.perfil}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="habilitado">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef>Habilitado</th>
+                        <td class="text-center" mat-cell *matCellDef="let row">
+                            {{row.perfil}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acoes">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef>Ações</th>
+                        <td class="text-center" mat-cell *matCellDef="let row">
+                            <button mat-icon-button>
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button mat-icon-button>
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+
+                <td-message *ngIf="usuarios.length == 0" label="Info" sublabel="Nenhum usuário cadastrado!"
+                    color="accent" icon="info">
+                </td-message>
+            </div>
         </mat-card-actions>
     </mat-card>
 </div>

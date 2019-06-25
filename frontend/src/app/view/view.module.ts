@@ -1,19 +1,23 @@
-import { PageUserComponent } from './layout/page-user/page-user.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { Routes, RouterModule } from '@angular/router';
-import { PageHomeComponent } from './layout/page-home/page-home.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { AngularValidateBrLibModule } from 'angular-validate-br';
+import { TextMaskModule } from 'angular2-text-mask';
+import { CoreModule } from '../core/core.module';
 import { ConvalentModule } from './convalent.module';
 import { LayoutComponent } from './layout/layout.component';
+import { PageHomeComponent } from './layout/page-home/page-home.component';
+import { PageCadastroComponent } from './layout/page-user/page-cadastro/page-cadastro.component';
+import { PageUserComponent } from './layout/page-user/page-user.component';
 import { MaterialModule } from './material.module';
-import { CoreModule } from '../core/core.module';
 
 const Components = [
   LayoutComponent,
   PageHomeComponent,
   PageUserComponent,
+  PageCadastroComponent,
 ];
 
 const routes: Routes = [
@@ -22,8 +26,9 @@ const routes: Routes = [
     component: LayoutComponent,
     children:
       [
-        { path: "home", component: PageHomeComponent },
-        { path: "user", component: PageUserComponent },
+        { path: "inicio", component: PageHomeComponent },
+        { path: "usuario", component: PageUserComponent },
+        { path: "cadastrar", component: PageCadastroComponent },
       ],
     data: { reuse: true }
   },
@@ -37,6 +42,8 @@ const routes: Routes = [
     ConvalentModule,
     MaterialModule,
     CoreModule,
+    TextMaskModule,
+    AngularValidateBrLibModule,
     RouterModule.forChild(routes),
   ],
   declarations: Components,

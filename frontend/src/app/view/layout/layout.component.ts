@@ -11,14 +11,14 @@ export class LayoutComponent implements OnInit {
   navmenu: Object[] = [
     {
       icon: 'home',
-      route: 'home',
+      route: 'inicio',
       title: 'Principal',
       description: 'Tela Inicial',
       checked: false,
     },
     {
       icon: 'people',
-      route: 'user',
+      route: 'usuario',
       title: 'Usuários',
       description: 'Gerenciamento de Usuários',
       checked: false,
@@ -30,7 +30,7 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._router.navigate(['home'])
+    this._router.navigate(['inicio'])
   }
 
 }
