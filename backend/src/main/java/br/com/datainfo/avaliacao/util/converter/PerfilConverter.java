@@ -10,7 +10,7 @@ public class PerfilConverter implements AttributeConverter<Perfil, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(Perfil attribute) {
-        return attribute == null ? attribute.getCodigo() : null;
+        return attribute == null ? null : attribute.getCodigo();
     }
 
     @Override

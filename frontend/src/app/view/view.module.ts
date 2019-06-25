@@ -28,10 +28,10 @@ const routes: Routes = [
       [
         { path: "inicio", component: PageHomeComponent },
         { path: "usuario", component: PageUserComponent },
-        { path: "cadastrar", component: PageCadastroComponent },
       ],
     data: { reuse: true }
   },
+  { path: "cadastrar", component: PageCadastroComponent, outlet: 'modal' },
 ];
 
 @NgModule({

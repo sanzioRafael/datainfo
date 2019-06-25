@@ -19,14 +19,14 @@ public class UsuarioExterno implements Serializable {
     @Column(name = "nu_cpf", length = 11, nullable = false)
     private String cpf;
 
-    @Column(name = "no_usuario", length = 60, insertable = false, updatable = false, nullable = false)
+    @Column(name = "no_usuario", length = 60, nullable = false)
     private String nome;
 
     @Email(message = "Email inválido")
     @Column(name = "de_email", length = 255, nullable = false)
     private String email;
 
-    @Column(name = "ic_situacao", length = 1, nullable = false)
+    @Column(name = "ic_situacao", nullable = false)
     private Situacao situacao;
 
     @Column(name = "ic_perfil_acesso", nullable = false, columnDefinition = "SMALLINT")

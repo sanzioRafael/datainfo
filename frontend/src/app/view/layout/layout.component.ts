@@ -30,7 +30,7 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._router.navigate(['inicio'])
+    this._router.navigate(['view', 'inicio'])
   }
 
 }

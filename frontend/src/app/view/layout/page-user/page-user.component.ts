@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
-import { ValidateBrService } from 'angular-validate-br';
+import { MatDialog, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { UsuarioModel } from './../../../core/models/usuario.model';
+import { PageCadastroComponent } from './page-cadastro/page-cadastro.component';
 
 @Component({
   selector: 'app-page-user',
@@ -22,14 +21,32 @@ export class PageUserComponent implements OnInit {
   usuarios: UsuarioModel[] = []
   displayedColumns: string[] = ['email', 'nome', 'perfil', 'habilitado', 'acoes']
   dataSource: MatTableDataSource<UsuarioModel>
+  message = null
 
   constructor(
     private _service: UsuarioService,
-    private _router: Router,
-    private _validateBrService: ValidateBrService
+    private _dialog: MatDialog,
   ) { }
 
   ngOnInit() {
+    this._listar()
+  }
+
+  filtrar() {
+
+  }
+
+  exibirCadastro() {
+    const dialogRef = this._createDialogCadastro()
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._listar()
+        this.message = result
+      }
+    })
+  }
+
+  private _listar() {
     this.dataSource = new MatTableDataSource()
     this._service.listar().subscribe(
       u => {
@@ -43,8 +60,10 @@ export class PageUserComponent implements OnInit {
     )
   }
 
-  filtrar() {
-
+  private _createDialogCadastro(): MatDialogRef<PageCadastroComponent> {
+    return this._dialog.open(PageCadastroComponent, {
+      width: '50%',
+    })
   }
 
 }

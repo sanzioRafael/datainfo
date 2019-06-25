@@ -38,40 +38,47 @@
 
             <div fxLayout="column" [fxFlex]="100">
                 <div [fxFlex]="100">
-                    <a href="" mat-button [routerLink]="['cadastrar']" color="primary">
+                    <button mat-button (click)="exibirCadastro()" color="primary">
                         <mat-icon>add</mat-icon>
                         Incluir
-                    </a>
+                    </button>
                 </div>
+
+                <br />
+
+                <td-message #message *ngIf="message" label="Sucesso" [sublabel]="message"
+                    class="bgc-green-200 tc-green-800" icon="info">
+                    <mat-icon td-message-actions mat-button (click)="message.close()">close</mat-icon>
+                </td-message>
 
                 <br />
 
                 <table *ngIf="usuarios.length > 0" mat-table #table [dataSource]="dataSource" [fxFlex]="100">
                     <ng-container matColumnDef="email">
-                        <th class="text-center" mat-header-cell *matHeaderCellDef>E-mail</th>
-                        <td class="text-center" mat-cell *matCellDef="let row">
+                        <th class="text-justify" mat-header-cell *matHeaderCellDef>E-mail</th>
+                        <td class="text-justify" mat-cell *matCellDef="let row">
                             {{row.email}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="nome">
-                        <th class="text-center" mat-header-cell *matHeaderCellDef>Nome</th>
-                        <td class="text-center" mat-cell *matCellDef="let row">
+                        <th class="text-justify" mat-header-cell *matHeaderCellDef>Nome</th>
+                        <td class="text-justify" mat-cell *matCellDef="let row">
                             {{row.nome}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="perfil">
-                        <th class="text-center" mat-header-cell *matHeaderCellDef>Perfil</th>
-                        <td class="text-center" mat-cell *matCellDef="let row">
+                        <th class="text-justify" mat-header-cell *matHeaderCellDef>Perfil</th>
+                        <td class="text-justify" mat-cell *matCellDef="let row">
                             {{row.perfil}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="habilitado">
-                        <th class="text-center" mat-header-cell *matHeaderCellDef>Habilitado</th>
-                        <td class="text-center" mat-cell *matCellDef="let row">
-                            {{row.perfil}}
+                        <th class="text-justify" mat-header-cell *matHeaderCellDef>Habilitado</th>
+                        <td class="text-justify" mat-cell *matCellDef="let row">
+                            {{row.situacao}}
                         </td>
                     </ng-container>
 

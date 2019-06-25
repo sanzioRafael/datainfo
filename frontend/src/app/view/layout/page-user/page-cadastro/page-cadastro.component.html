@@ -1,1 +1,66 @@
-<p>page-cadastro works!</p>
+<form (ngSubmit)="cadastrar()" [formGroup]="form">
+    <mat-card>
+        <mat-card-title>Incluir Usuário</mat-card-title>
+    </mat-card>
+
+    <mat-card-content>
+        <div fxLayout="row">
+            <mat-form-field [fxFlex]="45">
+                <input matInput formControlName="email" placeholder="E-Mail*">
+            </mat-form-field>
+
+            <span [fxFlex]="5"></span>
+
+            <mat-form-field [fxFlex]="45">
+                <input matInput formControlName="nome" placeholder="Nome*">
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field [fxFlex]="20">
+                <input matInput formControlName="cpf" placeholder="CPF*" [textMask]="{mask: mask.cpf}">
+            </mat-form-field>
+
+            <span [fxFlex]="5"></span>
+
+            <mat-form-field [fxFlex]="20">
+                <input matInput formControlName="telefone" placeholder="Telefone*" [textMask]="{mask: mask.telefone}">
+            </mat-form-field>
+
+            <span [fxFlex]="5"></span>
+
+            <mat-form-field [fxFlex]="20">
+                <mat-select formControlName="funcao" placeholder="Função*">
+                    <mat-option *ngFor="let funcao of funcoes" [value]="funcao.codigo">
+                        {{funcao.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <span [fxFlex]="5"></span>
+
+            <mat-form-field [fxFlex]="20">
+                <mat-select formControlName="perfil" placeholder="Perfil*">
+                    <mat-option *ngFor="let perfil of perfis" [value]="perfil">
+                        {{perfil}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button type="reset" (click)="sair()" mat-raised-button color="primary">
+                <mat-icon>cancel</mat-icon>
+                Cancelar
+            </button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+                <mat-icon>save</mat-icon>
+                Salvar
+            </button>
+        </div>
+    </mat-card-actions>
+</form>

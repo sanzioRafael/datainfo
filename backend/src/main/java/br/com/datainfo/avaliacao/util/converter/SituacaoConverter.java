@@ -6,15 +6,15 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class SituacaoConverter implements AttributeConverter<Situacao, Character> {
+public class SituacaoConverter implements AttributeConverter<Situacao, String> {
 
     @Override
-    public Character convertToDatabaseColumn(Situacao attribute) {
-        return attribute == null ? attribute.getCodigo() : null;
+    public String convertToDatabaseColumn(Situacao attribute) {
+        return attribute == null ? null : attribute.getCodigo();
     }
 
     @Override
-    public Situacao convertToEntityAttribute(Character dbData) {
+    public Situacao convertToEntityAttribute(String dbData) {
         for (Situacao s : Situacao.values()) {
             if (s.getCodigo().equals(dbData)) return s;
         }
