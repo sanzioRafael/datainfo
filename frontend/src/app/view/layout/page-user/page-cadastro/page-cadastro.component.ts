@@ -56,7 +56,6 @@ export class PageCadastroComponent implements OnInit {
       u.perfil = parseInt(global.Perfil[this.form.controls.perfil.value])
       u.situacao = global.Situacao['Desabilitado']
       this._service.incluirUsuario(u).subscribe(res => {
-        console.log(res.message)
         this._dialofRef.close(res.message)
       })
     }

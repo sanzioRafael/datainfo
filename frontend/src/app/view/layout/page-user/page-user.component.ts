@@ -21,7 +21,7 @@ export class PageUserComponent implements OnInit {
   usuarios: UsuarioModel[] = []
   displayedColumns: string[] = ['email', 'nome', 'perfil', 'habilitado', 'acoes']
   dataSource: MatTableDataSource<UsuarioModel>
-  message = null
+  msg = null
 
   constructor(
     private _service: UsuarioService,
@@ -41,7 +41,7 @@ export class PageUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this._listar()
-        this.message = result
+        this.msg = result
       }
     })
   }
