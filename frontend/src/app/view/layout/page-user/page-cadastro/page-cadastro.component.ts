@@ -60,12 +60,22 @@ export class PageCadastroComponent implements OnInit {
       if (this._data) {
         u.situacao = global.Situacao[this._data.situacao]
         this._service.atualizarUsuario(u).subscribe(res => {
-          this._dialofRef.close(res.message)
+          let msg = {
+            label: res.message.startsWith("Opera") ? "Erro" : "Sucesso",
+            sublabel: res.message,
+            icon: res.message.startsWith("Opera") ? "error" : "info"
+          }
+          this._dialofRef.close(msg)
         })
       } else {
         u.situacao = global.Situacao['Desabilitado']
         this._service.incluirUsuario(u).subscribe(res => {
-          this._dialofRef.close(res.message)
+          let msg = {
+            label: res.message.startsWith("Opera") ? "Erro" : "Sucesso",
+            sublabel: res.message,
+            icon: res.message.startsWith("Opera") ? "error" : "info"
+          }
+          this._dialofRef.close(msg)
         })
       }
     }

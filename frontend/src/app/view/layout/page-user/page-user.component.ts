@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
 import * as global from './../../../core/common/core.common';
 import { UsuarioModel } from './../../../core/models/usuario.model';
 import { PageCadastroComponent } from './page-cadastro/page-cadastro.component';
+import { ValidateBrService } from 'angular-validate-br';
+import { FiltroModel } from 'src/app/core/models/filtro.model';
 
 @Component({
   selector: 'app-page-user',
@@ -14,7 +16,7 @@ import { PageCadastroComponent } from './page-cadastro/page-cadastro.component';
 export class PageUserComponent implements OnInit {
 
   pesquisa: FormGroup = new FormGroup({
-    nome: new FormControl(null),
+    nome: new FormControl(null, [this._validateBrService.propName, Validators.maxLength(60)]),
     situacao: new FormControl(null),
     perfil: new FormControl(null)
   })
@@ -27,6 +29,7 @@ export class PageUserComponent implements OnInit {
   msg = null
 
   constructor(
+    private _validateBrService: ValidateBrService,
     private _service: UsuarioService,
     private _dialog: MatDialog,
   ) { }
@@ -48,8 +51,17 @@ export class PageUserComponent implements OnInit {
     return global.Situacao[v] == global.Situacao.Habilitado
   }
 
-  filtrar() {
+  controlInvalid(controlName: string): boolean {
+    return this.pesquisa.get(controlName).invalid
+  }
 
+  filtrar() {
+    let filtro = new FiltroModel()
+
+    filtro.nome = this.pesquisa.controls.nome.value
+    filtro.situacao = this.pesquisa.controls.situacao.value == null ? global.Situacao.Todos : global.Situacao[this.pesquisa.controls.situacao.value]
+    filtro.perfil = this.pesquisa.controls.perfil.value == null ? global.Perfil.Todos : parseInt(global.Perfil[this.pesquisa.controls.perfil.value])
+    
   }
 
   exibirCadastro() {
@@ -72,14 +84,24 @@ export class PageUserComponent implements OnInit {
 
   deletarUsuario(usuario: UsuarioModel) {
     this._service.deletarUsuario(usuario.cpf).subscribe(res => {
-      this._resposta(res.message)
+      let msg = {
+        label: res.message.startsWith("Opera") ? "Erro" : "Sucesso",
+        sublabel: res.message,
+        icon: res.message.startsWith("Opera") ? "error" : "info"
+      }
+      this._resposta(msg)
     })
   }
 
   alterarSituacao(usuario: UsuarioModel) {
     usuario.situacao = global.Situacao[usuario.situacao] == global.Situacao.Desabilitado ? global.Situacao.Habilitado : global.Situacao.Desabilitado
     this._service.atualizarSituacao(usuario).subscribe(res => {
-      this._resposta(res.message)
+      let msg = {
+        label: res.message.startsWith("Opera") ? "Erro" : "Sucesso",
+        sublabel: res.message,
+        icon: res.message.startsWith("Opera") ? "error" : "info"
+      }
+      this._resposta(msg)
     })
   }
 
@@ -107,8 +129,8 @@ export class PageUserComponent implements OnInit {
   private _tratarMensagem() {
     if (this.msg) {
       let txt = document.createElement("textarea")
-      txt.innerHTML = this.msg
-      this.msg = txt.value
+      txt.innerHTML = this.msg.sublabel
+      this.msg.sublabel = txt.value
     }
   }
 

@@ -7,6 +7,7 @@
                 <div fxLayout="row">
                     <mat-form-field [fxFlex]="45">
                         <input matInput formControlName="nome" placeholder="Nome">
+                        <mat-error *ngIf="controlInvalid('nome')">Nome inválido</mat-error>
                     </mat-form-field>
 
                     <span [fxFlex]="5"></span>
@@ -31,7 +32,7 @@
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="end">
-                    <button mat-raised-button type="submit" color="primary">
+                    <button mat-raised-button type="submit" color="primary" [disabled]="pesquisa.invalid">
                         Pesquisar
                         <mat-icon>search</mat-icon>
                     </button>
@@ -54,7 +55,8 @@
 
                 <br />
 
-                <td-message *ngIf="msg" label="Sucesso" [sublabel]="msg" class="bgc-green-200 tc-green-800" icon="info">
+                <td-message *ngIf="msg" [label]="msg.label" [sublabel]="msg.sublabel" [icon]="msg.icon"
+                    [ngClass]="{'bgc-green-200 tc-green-800': msg.label == 'Sucesso', 'bgc-red-200 tc-red-800': msg.label == 'Erro'}">
                     <button td-message-actions mat-icon-button (click)="msg = null">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -87,8 +89,8 @@
                     <ng-container matColumnDef="habilitado">
                         <th class="text-justify" mat-header-cell *matHeaderCellDef>Habilitado</th>
                         <td class="text-justify" mat-cell *matCellDef="let row">
-                            <mat-slide-toggle (change)="alterarSituacao(row)" [checked]="isHabilitado(row.situacao)" color="primary">
-                                {{row.situacao}}
+                            <mat-slide-toggle (change)="alterarSituacao(row)" [checked]="isHabilitado(row.situacao)"
+                                color="primary">
                             </mat-slide-toggle>
                         </td>
                     </ng-container>
