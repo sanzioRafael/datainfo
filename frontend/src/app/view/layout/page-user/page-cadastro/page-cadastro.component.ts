@@ -1,13 +1,13 @@
-import { UsuarioModel } from './../../../../core/models/usuario.model';
-import * as global from './../../../../core/common/core.common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Mask } from './../../../../core/models/mask.model';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ValidateBrService } from 'angular-validate-br';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
-import { FuncaoService } from 'src/app/core/services/funcao.service';
 import { FuncaoModel } from 'src/app/core/models/funcao.model';
+import { FuncaoService } from 'src/app/core/services/funcao.service';
+import { UsuarioService } from 'src/app/core/services/usuario.service';
+import * as global from './../../../../core/common/core.common';
+import { Mask } from './../../../../core/models/mask.model';
+import { UsuarioModel } from './../../../../core/models/usuario.model';
 
 @Component({
   selector: 'app-page-cadastro',
@@ -57,7 +57,7 @@ export class PageCadastroComponent implements OnInit {
       u.funcao = funcao
       u.perfil = parseInt(global.Perfil[this.form.controls.perfil.value])
 
-      if(this._data) {
+      if (this._data) {
         u.situacao = global.Situacao[this._data.situacao.charAt(0).toUpperCase() + this._data.situacao.slice(1).toLowerCase()]
         this._service.atualizarUsuario(u).subscribe(res => {
           this._dialofRef.close(res.message)
@@ -76,7 +76,7 @@ export class PageCadastroComponent implements OnInit {
     this._dialofRef.close(null)
   }
 
-  controlInvalid(controlName: string):boolean {
+  controlInvalid(controlName: string): boolean {
     return this.form.get(controlName).invalid
   }
 

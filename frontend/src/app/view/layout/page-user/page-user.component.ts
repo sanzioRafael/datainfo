@@ -24,7 +24,7 @@ export class PageUserComponent implements OnInit {
   usuarios: UsuarioModel[] = []
   displayedColumns: string[] = ['email', 'nome', 'perfil', 'habilitado', 'acoes']
   dataSource: MatTableDataSource<UsuarioModel>
-  msg = null
+  private msg = null
 
   constructor(
     private _service: UsuarioService,
@@ -47,6 +47,7 @@ export class PageUserComponent implements OnInit {
       if (result) {
         this._listar()
         this.msg = result
+        this._tratarMensagem()
       }
     })
   }
@@ -57,6 +58,7 @@ export class PageUserComponent implements OnInit {
       if (result) {
         this._listar()
         this.msg = result
+        this._tratarMensagem()
       }
     })
   }
@@ -65,6 +67,7 @@ export class PageUserComponent implements OnInit {
     this._service.deletarUsuario(usuario.cpf).subscribe(res => {
       this._listar()
       this.msg = res.message
+      this._tratarMensagem()
     })
   }
 
@@ -87,6 +90,14 @@ export class PageUserComponent implements OnInit {
       width: '50%',
       data: usuario
     })
+  }
+
+  private _tratarMensagem() {
+    if (this.msg) {
+      let txt = document.createElement("textarea")
+      txt.innerHTML = this.msg
+      this.msg = txt.value
+    }
   }
 
 }
