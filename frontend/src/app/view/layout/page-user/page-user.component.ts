@@ -36,7 +36,8 @@ export class PageUserComponent implements OnInit {
 
   ngOnInit() {
     this.perfis = this.perfis.slice(this.perfis.length / 2)
-    this._listar()
+    this.dataSource = new MatTableDataSource()
+    this.filtrar()
   }
 
   perfil(v: number): string {
@@ -62,6 +63,10 @@ export class PageUserComponent implements OnInit {
     filtro.situacao = this.pesquisa.controls.situacao.value == null ? global.Situacao.Todos : global.Situacao[this.pesquisa.controls.situacao.value]
     filtro.perfil = this.pesquisa.controls.perfil.value == null ? global.Perfil.Todos : parseInt(global.Perfil[this.pesquisa.controls.perfil.value])
     
+    this._service.filtrar(filtro).subscribe(u => {
+      this.usuarios = u
+      this.dataSource = new MatTableDataSource(this.usuarios)
+    })
   }
 
   exibirCadastro() {
@@ -105,20 +110,6 @@ export class PageUserComponent implements OnInit {
     })
   }
 
-  private _listar() {
-    this.dataSource = new MatTableDataSource()
-    this._service.listar().subscribe(
-      u => {
-        this.usuarios = u
-        this.dataSource = new MatTableDataSource(this.usuarios)
-      },
-      error => {
-        console.log(error)
-        this.usuarios = []
-      }
-    )
-  }
-
   private _createDialogCadastro(usuario: UsuarioModel = null): MatDialogRef<PageCadastroComponent> {
     return this._dialog.open(PageCadastroComponent, {
       width: '50%',
@@ -135,7 +126,8 @@ export class PageUserComponent implements OnInit {
   }
 
   private _resposta(msg) {
-    this._listar()
+    this.pesquisa.reset
+    this.filtrar()
     this.msg = msg
     this._tratarMensagem()
   }

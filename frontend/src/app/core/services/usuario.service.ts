@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuario.model';
 import { map } from 'rxjs/operators';
+import { FiltroModel } from '../models/filtro.model';
 
 @Injectable()
 export class UsuarioService {
@@ -13,6 +14,11 @@ export class UsuarioService {
   listar(): Observable<UsuarioModel[]> {
     const url = environment.api_endpoint + "usuario/listar"
     return this._http.get<UsuarioModel[]>(url)
+  }
+
+  filtrar(filtro: FiltroModel): Observable<UsuarioModel[]> {
+    const url = environment.api_endpoint + "usuario/filtrar"
+    return this._http.post<UsuarioModel[]>(url, JSON.stringify(filtro)).pipe(map((res) => res))
   }
 
   incluirUsuario(usuario: UsuarioModel): Observable<any> {

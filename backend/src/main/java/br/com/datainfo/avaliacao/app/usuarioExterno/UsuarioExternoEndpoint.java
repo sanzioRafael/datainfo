@@ -1,6 +1,7 @@
 package br.com.datainfo.avaliacao.app.usuarioExterno;
 
 import br.com.datainfo.avaliacao.util.Mensagem;
+import br.com.datainfo.avaliacao.util.filtro.FiltroVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,11 @@ class UsuarioExternoEndpoint {
     @PutMapping(value = "/atualizarSituacao")
     public Mensagem atualizarSituacao(@Valid @RequestBody UsuarioExterno usuarioExterno) {
         return usuarioExternoService.atualizarSituacao(usuarioExterno);
+    }
+
+    @PostMapping(value = "/filtrar")
+    public List<UsuarioExterno> filtrar(@Valid @RequestBody FiltroVO filtro) {
+        return usuarioExternoService.filtrarTodosPorFiltro(filtro);
     }
 
 }

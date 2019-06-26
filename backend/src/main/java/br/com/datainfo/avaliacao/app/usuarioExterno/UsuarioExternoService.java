@@ -1,7 +1,9 @@
 package br.com.datainfo.avaliacao.app.usuarioExterno;
 
 import br.com.datainfo.avaliacao.util.Mensagem;
+import br.com.datainfo.avaliacao.util.enums.Perfil;
 import br.com.datainfo.avaliacao.util.enums.Situacao;
+import br.com.datainfo.avaliacao.util.filtro.FiltroVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,33 @@ public class UsuarioExternoService {
 
     public List<UsuarioExterno> listarTodos() {
         return usuarioExternoRepository.findAll(Sort.by("nome"));
+    }
+
+    public List<UsuarioExterno> filtrarTodosPorFiltro(FiltroVO filtro) {
+        boolean nome = filtro.getNome() != null && !filtro.getNome().isEmpty();
+        boolean situacao = filtro.getSituacao() == Situacao.TODOS ? false : true;
+        boolean perfil = filtro.getPerfil() == Perfil.TODOS ? false : true;
+
+        if (nome && situacao && perfil)
+            return usuarioExternoRepository.findAllByNomeAndSituacaoAndPerfil(
+                    filtro.getNome(), filtro.getSituacao(), filtro.getPerfil());
+
+        if (nome && situacao)
+            return usuarioExternoRepository.findAllByNomeAndSituacao(filtro.getNome(), filtro.getSituacao());
+
+        if (nome && perfil)
+            return usuarioExternoRepository.findAllByNomeAndPerfil(filtro.getNome(), filtro.getPerfil());
+
+        if (nome) return usuarioExternoRepository.findAllByNome(filtro.getNome());
+
+        if (situacao && perfil)
+            return usuarioExternoRepository.findAllBySituacaoAndPerfil(filtro.getSituacao(), filtro.getPerfil());
+
+        if (situacao) return usuarioExternoRepository.findAllBySituacao(filtro.getSituacao());
+
+        if (perfil) return usuarioExternoRepository.findAllBySituacao(filtro.getSituacao());
+
+        return listarTodos();
     }
 
 }
