@@ -76,6 +76,10 @@ export class PageCadastroComponent implements OnInit {
     this._dialofRef.close(null)
   }
 
+  controlInvalid(controlName: string):boolean {
+    return this.form.get(controlName).invalid
+  }
+
   private _inicializar() {
     if (this._data) {
       this.titulo = "Editar"

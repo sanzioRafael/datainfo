@@ -7,24 +7,28 @@
         <div fxLayout="row">
             <mat-form-field [fxFlex]="45">
                 <input matInput formControlName="email" placeholder="E-Mail*">
+                <mat-error *ngIf="controlInvalid('email')">E-mail inválido</mat-error>
             </mat-form-field>
 
             <span [fxFlex]="5"></span>
 
             <mat-form-field [fxFlex]="45">
                 <input matInput formControlName="nome" placeholder="Nome*">
+                <mat-error *ngIf="controlInvalid('nome')">Nome é obrigatório</mat-error>
             </mat-form-field>
         </div>
 
         <div fxLayout="row">
             <mat-form-field [fxFlex]="20">
                 <input matInput formControlName="cpf" placeholder="CPF*" [textMask]="{mask: mask.cpf}">
+                <mat-error *ngIf="controlInvalid('cpf')">CPF inválido</mat-error>
             </mat-form-field>
 
             <span [fxFlex]="5"></span>
 
             <mat-form-field [fxFlex]="20">
                 <input matInput formControlName="telefone" placeholder="Telefone*" [textMask]="{mask: mask.telefone}">
+                <mat-error *ngIf="controlInvalid('telefone')">Telefone é obrigatório</mat-error>
             </mat-form-field>
 
             <span [fxFlex]="5"></span>
@@ -35,6 +39,7 @@
                         {{funcao.nome}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="controlInvalid('funcao')">Função é obrigatório</mat-error>
             </mat-form-field>
 
             <span [fxFlex]="5"></span>
@@ -45,6 +50,7 @@
                         {{perfil}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="controlInvalid('perfil')">Perfil é obrigatório</mat-error>
             </mat-form-field>
         </div>
     </mat-card-content>
