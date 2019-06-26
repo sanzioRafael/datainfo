@@ -26,7 +26,7 @@ export class PageCadastroComponent implements OnInit {
     funcao: new FormControl(null, Validators.required),
     perfil: new FormControl(null, Validators.required),
   })
-  perfis: string[] = Object.keys(global.Perfil)
+  perfis: string[] = [global.Perfil[1], global.Perfil[2], global.Perfil[3]]
   titulo = "Incluir"
 
   constructor(
@@ -103,7 +103,6 @@ export class PageCadastroComponent implements OnInit {
       })
     }
 
-    this.perfis = this.perfis.slice(this.perfis.length / 2)
     this._funcaoService.listar().subscribe(f => this.funcoes = f)
   }
 

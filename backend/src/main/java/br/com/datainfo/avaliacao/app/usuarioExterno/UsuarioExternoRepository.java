@@ -11,17 +11,17 @@ import java.util.List;
 @Repository
 interface UsuarioExternoRepository extends JpaRepository<UsuarioExterno, String>, CrudRepository<UsuarioExterno, String> {
 
-    List<UsuarioExterno> findAllByNome(String nome);
+    List<UsuarioExterno> findAllByNomeOrderByNome(String nome);
 
-    List<UsuarioExterno> findAllBySituacao(Situacao situacao);
+    List<UsuarioExterno> findAllBySituacaoOrderByNome(Situacao situacao);
 
-    List<UsuarioExterno> findAllByPerfil(Perfil perfil);
+    List<UsuarioExterno> findAllByPerfilOrderByNome(Perfil perfil);
 
-    List<UsuarioExterno> findAllByNomeAndSituacao(String nome, Situacao situacao);
+    List<UsuarioExterno> findAllByNomeAndSituacaoOrderByNome(String nome, Situacao situacao);
 
-    List<UsuarioExterno> findAllByNomeAndPerfil(String nome, Perfil perfil);
+    List<UsuarioExterno> findAllByNomeAndPerfilOrderByNome(String nome, Perfil perfil);
 
-    List<UsuarioExterno> findAllBySituacaoAndPerfil(Situacao situacao, Perfil perfil);
+    List<UsuarioExterno> findAllBySituacaoAndPerfilOrderByNome(Situacao situacao, Perfil perfil);
 
-    List<UsuarioExterno> findAllByNomeAndSituacaoAndPerfil(String nome, Situacao situacao, Perfil perfil);
+    List<UsuarioExterno> findAllByNomeAndSituacaoAndPerfilOrderByNome(String nome, Situacao situacao, Perfil perfil);
 }

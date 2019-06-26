@@ -63,23 +63,23 @@ public class UsuarioExternoService {
         boolean perfil = filtro.getPerfil() == Perfil.TODOS ? false : true;
 
         if (nome && situacao && perfil)
-            return usuarioExternoRepository.findAllByNomeAndSituacaoAndPerfil(
+            return usuarioExternoRepository.findAllByNomeAndSituacaoAndPerfilOrderByNome(
                     filtro.getNome(), filtro.getSituacao(), filtro.getPerfil());
 
         if (nome && situacao)
-            return usuarioExternoRepository.findAllByNomeAndSituacao(filtro.getNome(), filtro.getSituacao());
+            return usuarioExternoRepository.findAllByNomeAndSituacaoOrderByNome(filtro.getNome(), filtro.getSituacao());
 
         if (nome && perfil)
-            return usuarioExternoRepository.findAllByNomeAndPerfil(filtro.getNome(), filtro.getPerfil());
+            return usuarioExternoRepository.findAllByNomeAndPerfilOrderByNome(filtro.getNome(), filtro.getPerfil());
 
-        if (nome) return usuarioExternoRepository.findAllByNome(filtro.getNome());
+        if (nome) return usuarioExternoRepository.findAllByNomeOrderByNome(filtro.getNome());
 
         if (situacao && perfil)
-            return usuarioExternoRepository.findAllBySituacaoAndPerfil(filtro.getSituacao(), filtro.getPerfil());
+            return usuarioExternoRepository.findAllBySituacaoAndPerfilOrderByNome(filtro.getSituacao(), filtro.getPerfil());
 
-        if (situacao) return usuarioExternoRepository.findAllBySituacao(filtro.getSituacao());
+        if (situacao) return usuarioExternoRepository.findAllBySituacaoOrderByNome(filtro.getSituacao());
 
-        if (perfil) return usuarioExternoRepository.findAllBySituacao(filtro.getSituacao());
+        if (perfil) return usuarioExternoRepository.findAllBySituacaoOrderByNome(filtro.getSituacao());
 
         return listarTodos();
     }
