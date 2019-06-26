@@ -58,7 +58,7 @@ export class PageCadastroComponent implements OnInit {
       u.perfil = parseInt(global.Perfil[this.form.controls.perfil.value])
 
       if (this._data) {
-        u.situacao = global.Situacao[this._data.situacao.charAt(0).toUpperCase() + this._data.situacao.slice(1).toLowerCase()]
+        u.situacao = global.Situacao[this._data.situacao]
         this._service.atualizarUsuario(u).subscribe(res => {
           this._dialofRef.close(res.message)
         })

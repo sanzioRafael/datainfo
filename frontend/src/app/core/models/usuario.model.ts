@@ -7,4 +7,5 @@ export class UsuarioModel {
     perfil: number
     funcao: FuncaoModel
     telefone: string
+    habilitado: boolean
 }

@@ -24,10 +24,15 @@ export class UsuarioService {
     const url = environment.api_endpoint + "usuario/atualizar"
     return this._http.put(url, JSON.stringify(usuario)).pipe(map((res) => res))
   }
-
+  
   deletarUsuario(cpf: string): Observable<any> {
     const url = environment.api_endpoint + "usuario/deletar/" + cpf
     return this._http.delete(url).pipe(map((res) => res))
+  }
+
+  atualizarSituacao(usuario: UsuarioModel): Observable<any> {
+    const url = environment.api_endpoint + "usuario/atualizarSituacao"
+    return this._http.put(url, JSON.stringify(usuario)).pipe(map((res) => res))
   }
 
 }

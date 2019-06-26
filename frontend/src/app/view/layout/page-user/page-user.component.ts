@@ -19,12 +19,12 @@ export class PageUserComponent implements OnInit {
     perfil: new FormControl(null)
   })
   perfis: string[] = Object.keys(global.Perfil)
-  situacaoes: string[] = Object.keys(global.Situacao)
+  situacoes: string[] = Object.keys(global.Situacao)
 
   usuarios: UsuarioModel[] = []
   displayedColumns: string[] = ['email', 'nome', 'perfil', 'habilitado', 'acoes']
   dataSource: MatTableDataSource<UsuarioModel>
-  private msg = null
+  msg = null
 
   constructor(
     private _service: UsuarioService,
@@ -33,8 +33,19 @@ export class PageUserComponent implements OnInit {
 
   ngOnInit() {
     this.perfis = this.perfis.slice(this.perfis.length / 2)
-    this.situacaoes = this.situacaoes.slice(this.situacaoes.length / 2)
     this._listar()
+  }
+
+  perfil(v: number): string {
+    return global.Perfil[v]
+  }
+
+  situacao(v: string): string {
+    return global.Situacao[v]
+  }
+
+  isHabilitado(v: string): boolean {
+    return global.Situacao[v] == global.Situacao.Habilitado
   }
 
   filtrar() {
@@ -45,9 +56,7 @@ export class PageUserComponent implements OnInit {
     const dialogRef = this._createDialogCadastro()
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._listar()
-        this.msg = result
-        this._tratarMensagem()
+        this._resposta(result)
       }
     })
   }
@@ -56,18 +65,21 @@ export class PageUserComponent implements OnInit {
     const dialogRef = this._createDialogCadastro(usuario)
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._listar()
-        this.msg = result
-        this._tratarMensagem()
+        this._resposta(result)
       }
     })
   }
 
   deletarUsuario(usuario: UsuarioModel) {
     this._service.deletarUsuario(usuario.cpf).subscribe(res => {
-      this._listar()
-      this.msg = res.message
-      this._tratarMensagem()
+      this._resposta(res.message)
+    })
+  }
+
+  alterarSituacao(usuario: UsuarioModel) {
+    usuario.situacao = global.Situacao[usuario.situacao] == global.Situacao.Desabilitado ? global.Situacao.Habilitado : global.Situacao.Desabilitado
+    this._service.atualizarSituacao(usuario).subscribe(res => {
+      this._resposta(res.message)
     })
   }
 
@@ -98,6 +110,12 @@ export class PageUserComponent implements OnInit {
       txt.innerHTML = this.msg
       this.msg = txt.value
     }
+  }
+
+  private _resposta(msg) {
+    this._listar()
+    this.msg = msg
+    this._tratarMensagem()
   }
 
 }

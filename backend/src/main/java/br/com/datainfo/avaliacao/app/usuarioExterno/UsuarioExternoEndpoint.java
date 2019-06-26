@@ -34,4 +34,9 @@ class UsuarioExternoEndpoint {
         return usuarioExternoService.deletarUsuario(cpf);
     }
 
+    @PutMapping(value = "/atualizarSituacao")
+    public Mensagem atualizarSituacao(@Valid @RequestBody UsuarioExterno usuarioExterno) {
+        return usuarioExternoService.atualizarSituacao(usuarioExterno);
+    }
+
 }

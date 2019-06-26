@@ -3,6 +3,7 @@ package br.com.datainfo.avaliacao.util.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public enum Situacao {
 
     private String codigo;
 
+    @JsonValue
     private String descricao;
 
     Situacao(String codigo, String descricao) {

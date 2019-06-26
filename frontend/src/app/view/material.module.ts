@@ -6,11 +6,11 @@
  * To optimize your production builds, you should only import the components used in your app.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
 DateAdapter, MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatCommonModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatLineModule, MatListModule, MatMenuModule,
   //MatTreeModule,
-  MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule, MatPseudoCheckboxModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatTableModule, MatToolbarModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_SNACK_BAR_DEFAULT_OPTIONS
+  MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule, MatPseudoCheckboxModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatTableModule, MatToolbarModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSlideToggleModule
 } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -67,7 +67,7 @@ export const DateFormat = {
     //MatRippleModule,
     MatSelectModule,
     MatSidenavModule,
-    //MatSlideToggleModule,
+    MatSlideToggleModule,
     //MatSliderModule,
     MatSnackBarModule,
     //MatSortModule,
@@ -78,6 +78,7 @@ export const DateFormat = {
     //MatTooltipModule,
     MatMomentDateModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MaterialModule {
 }

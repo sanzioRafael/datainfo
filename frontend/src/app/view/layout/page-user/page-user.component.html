@@ -80,14 +80,16 @@
                     <ng-container matColumnDef="perfil">
                         <th class="text-justify" mat-header-cell *matHeaderCellDef>Perfil</th>
                         <td class="text-justify" mat-cell *matCellDef="let row">
-                            {{row.perfil}}
+                            {{perfil(row.perfil)}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="habilitado">
                         <th class="text-justify" mat-header-cell *matHeaderCellDef>Habilitado</th>
                         <td class="text-justify" mat-cell *matCellDef="let row">
-                            {{row.situacao}}
+                            <mat-slide-toggle (change)="alterarSituacao(row)" [checked]="isHabilitado(row.situacao)" color="primary">
+                                {{row.situacao}}
+                            </mat-slide-toggle>
                         </td>
                     </ng-container>
 
