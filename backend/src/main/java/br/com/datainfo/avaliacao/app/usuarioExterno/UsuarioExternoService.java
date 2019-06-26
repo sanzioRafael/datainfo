@@ -27,6 +27,19 @@ public class UsuarioExternoService {
         }
     }
 
+    @Transactional
+    public Mensagem atualizarUsuario(UsuarioExterno usuarioExterno) {
+        usuarioExternoRepository.save(usuarioExterno);
+        return new Mensagem("MN030");
+    }
+
+
+    @Transactional
+    public Mensagem deletarUsuario(String cpf) {
+        usuarioExternoRepository.deleteById(cpf);
+        return new Mensagem("MN005");
+    }
+
     public List<UsuarioExterno> listarTodos() {
         return usuarioExternoRepository.findAll();
     }

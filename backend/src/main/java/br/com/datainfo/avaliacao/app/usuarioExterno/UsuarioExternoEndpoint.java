@@ -14,14 +14,24 @@ class UsuarioExternoEndpoint {
     @Autowired
     private UsuarioExternoService usuarioExternoService;
 
+    @GetMapping(value = "/listar")
+    public List<UsuarioExterno> listar() {
+        return usuarioExternoService.listarTodos();
+    }
+
     @PostMapping(value = "/cadastrar")
     public Mensagem cadastrar(@Valid @RequestBody UsuarioExterno usuarioExterno) {
         return usuarioExternoService.cadastrarUsuario(usuarioExterno);
     }
 
-    @GetMapping(value = "/listar")
-    public List<UsuarioExterno> listar() {
-        return usuarioExternoService.listarTodos();
+    @PutMapping(value = "/atualizar")
+    public Mensagem atualizar(@Valid @RequestBody UsuarioExterno usuarioExterno) {
+        return usuarioExternoService.atualizarUsuario(usuarioExterno);
+    }
+
+    @DeleteMapping(value = "/deletar/{cpf}")
+    public Mensagem deletar(@PathVariable("cpf") String cpf) {
+        return usuarioExternoService.deletarUsuario(cpf);
     }
 
 }

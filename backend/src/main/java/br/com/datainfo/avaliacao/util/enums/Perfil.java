@@ -1,5 +1,12 @@
 package br.com.datainfo.avaliacao.util.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Arrays;
+
+@JsonFormat(shape = JsonFormat.Shape.NUMBER)
 public enum Perfil {
 
     TODOS(0, "Todos"),
@@ -22,6 +29,15 @@ public enum Perfil {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    @JsonCreator
+    static Situacao findValue(
+            @JsonProperty("perfil") String codigo
+    ) {
+        return Arrays.stream(Situacao.values()).filter(
+                Situacao -> Situacao.getCodigo().toString().equals(codigo))
+                .findFirst().get();
     }
 
 }

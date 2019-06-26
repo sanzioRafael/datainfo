@@ -12,13 +12,21 @@
                     <span [fxFlex]="5"></span>
 
                     <mat-form-field [fxFlex]="20">
-                        <input matInput formControlName="situacao" placeholder="Situação">
+                        <mat-select formControlName="situacao" placeholder="Situação">
+                            <mat-option *ngFor="let situacao of situacoes" [value]="situacao">
+                                {{situacao}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
                     <span [fxFlex]="5"></span>
 
                     <mat-form-field [fxFlex]="20">
-                        <input matInput formControlName="perfil" placeholder="Perfil">
+                        <mat-select formControlName="perfil" placeholder="Perfil">
+                            <mat-option *ngFor="let perfil of perfis" [value]="perfil">
+                                {{perfil}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
 
@@ -46,9 +54,10 @@
 
                 <br />
 
-                <td-message #message *ngIf="msg" label="Sucesso" [sublabel]="msg"
-                    class="bgc-green-200 tc-green-800" icon="info">
-                    <mat-icon td-message-actions mat-button (click)="message.close()">close</mat-icon>
+                <td-message *ngIf="msg" label="Sucesso" [sublabel]="msg" class="bgc-green-200 tc-green-800" icon="info">
+                    <button td-message-actions mat-icon-button (click)="msg = null">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </td-message>
 
                 <br />
@@ -85,11 +94,11 @@
                     <ng-container matColumnDef="acoes">
                         <th class="text-center" mat-header-cell *matHeaderCellDef>Ações</th>
                         <td class="text-center" mat-cell *matCellDef="let row">
-                            <button mat-icon-button>
+                            <button mat-icon-button (click)="exibirAlteracao(row)">
                                 <mat-icon>edit</mat-icon>
                             </button>
 
-                            <button mat-icon-button>
+                            <button mat-icon-button (click)="deletarUsuario(row)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </td>

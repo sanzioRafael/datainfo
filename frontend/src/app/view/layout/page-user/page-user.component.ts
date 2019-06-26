@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
+import * as global from './../../../core/common/core.common';
 import { UsuarioModel } from './../../../core/models/usuario.model';
 import { PageCadastroComponent } from './page-cadastro/page-cadastro.component';
 
@@ -17,6 +18,8 @@ export class PageUserComponent implements OnInit {
     situacao: new FormControl(null),
     perfil: new FormControl(null)
   })
+  perfis: string[] = Object.keys(global.Perfil)
+  situacaoes: string[] = Object.keys(global.Situacao)
 
   usuarios: UsuarioModel[] = []
   displayedColumns: string[] = ['email', 'nome', 'perfil', 'habilitado', 'acoes']
@@ -29,6 +32,8 @@ export class PageUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.perfis = this.perfis.slice(this.perfis.length / 2)
+    this.situacaoes = this.situacaoes.slice(this.situacaoes.length / 2)
     this._listar()
   }
 
@@ -46,6 +51,23 @@ export class PageUserComponent implements OnInit {
     })
   }
 
+  exibirAlteracao(usuario: UsuarioModel) {
+    const dialogRef = this._createDialogCadastro(usuario)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._listar()
+        this.msg = result
+      }
+    })
+  }
+
+  deletarUsuario(usuario: UsuarioModel) {
+    this._service.deletarUsuario(usuario.cpf).subscribe(res => {
+      this._listar()
+      this.msg = res.message
+    })
+  }
+
   private _listar() {
     this.dataSource = new MatTableDataSource()
     this._service.listar().subscribe(
@@ -60,9 +82,10 @@ export class PageUserComponent implements OnInit {
     )
   }
 
-  private _createDialogCadastro(): MatDialogRef<PageCadastroComponent> {
+  private _createDialogCadastro(usuario: UsuarioModel = null): MatDialogRef<PageCadastroComponent> {
     return this._dialog.open(PageCadastroComponent, {
       width: '50%',
+      data: usuario
     })
   }
 

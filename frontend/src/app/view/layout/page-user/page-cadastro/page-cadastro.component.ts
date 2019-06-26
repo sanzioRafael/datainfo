@@ -2,8 +2,8 @@ import { UsuarioModel } from './../../../../core/models/usuario.model';
 import * as global from './../../../../core/common/core.common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Mask } from './../../../../core/models/mask.model';
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ValidateBrService } from 'angular-validate-br';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { FuncaoService } from 'src/app/core/services/funcao.service';
@@ -27,12 +27,14 @@ export class PageCadastroComponent implements OnInit {
     perfil: new FormControl(null, Validators.required),
   })
   perfis: string[] = Object.keys(global.Perfil)
+  titulo = "Incluir"
 
   constructor(
     private _dialofRef: MatDialogRef<PageCadastroComponent>,
     private _validateBrService: ValidateBrService,
     private _service: UsuarioService,
     private _funcaoService: FuncaoService,
+    @Inject(MAT_DIALOG_DATA) private _data: UsuarioModel,
   ) { }
 
   ngOnInit() {
@@ -54,10 +56,18 @@ export class PageCadastroComponent implements OnInit {
       u.telefone = this.form.controls.telefone.value.replace(/\D+/g, "").trim()
       u.funcao = funcao
       u.perfil = parseInt(global.Perfil[this.form.controls.perfil.value])
-      u.situacao = global.Situacao['Desabilitado']
-      this._service.incluirUsuario(u).subscribe(res => {
-        this._dialofRef.close(res.message)
-      })
+
+      if(this._data) {
+        u.situacao = global.Situacao[this._data.situacao.charAt(0).toUpperCase() + this._data.situacao.slice(1).toLowerCase()]
+        this._service.atualizarUsuario(u).subscribe(res => {
+          this._dialofRef.close(res.message)
+        })
+      } else {
+        u.situacao = global.Situacao['Desabilitado']
+        this._service.incluirUsuario(u).subscribe(res => {
+          this._dialofRef.close(res.message)
+        })
+      }
     }
   }
 
@@ -67,6 +77,18 @@ export class PageCadastroComponent implements OnInit {
   }
 
   private _inicializar() {
+    if (this._data) {
+      this.titulo = "Editar"
+      this.form = new FormGroup({
+        email: new FormControl(this._data.email, [Validators.required, Validators.email, Validators.maxLength(255)]),
+        nome: new FormControl(this._data.nome, [Validators.required, this._validateBrService.propName, Validators.maxLength(60)]),
+        cpf: new FormControl(this._data.cpf, [Validators.required, this._validateBrService.cpf]),
+        telefone: new FormControl(this._data.telefone, [Validators.required]),
+        funcao: new FormControl(this._data.funcao.codigo, Validators.required),
+        perfil: new FormControl(global.Perfil[this._data.perfil], Validators.required),
+      })
+    }
+
     this.perfis = this.perfis.slice(this.perfis.length / 2)
     this._funcaoService.listar().subscribe(f => this.funcoes = f)
   }
